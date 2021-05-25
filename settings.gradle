@@ -1,0 +1,4 @@
+include ':libusbcamera'
+//include ':module_bdocr'
+include ':app'
+rootProject.name = "3glasses"

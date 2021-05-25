@@ -1,0 +1,90 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "30.0.1"
+
+    defaultConfig {
+        applicationId "com.cnsj.neptunglasses"
+        minSdkVersion 24
+        targetSdkVersion 27
+        versionCode 103
+        versionName "1.0.3"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters 'arm64-v8a'//'armeabi-v7a',
+        }
+    }
+
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    aaptOptions {
+        noCompress "tflite"
+        noCompress "lite"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+    mavenCentral()
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.preference:preference:1.1.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:design:28.0.0'
+
+//    implementation project(path: ':module_bdocr')
+    implementation project(path: ':libusbcamera')
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'androidx.navigation:navigation-fragment:2.3.1'
+    implementation 'androidx.navigation:navigation-ui:2.3.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3'
+    implementation files('libs\\Msc.jar')
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation(name: 'common-release', ext: 'aar')
+    implementation(name: 'xgvr-release', ext: 'aar')
+    api files('libs\\ocr-sdk.jar')
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.github.xuexiangjys:XUpdate:1.1.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    implementation 'com.zhy:okhttputils:2.6.2'
+    compile 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+//    compile 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+
+    //PermissionsDispatcher
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.lxj:xpopup:2.0.7'
+    implementation 'com.king.zxing:zxing-lite:1.1.6-androidx'
+    implementation 'org.zeromq:jeromq:0.5.1'
+
+
+}

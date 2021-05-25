@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_mode_color"
+        android:title="全彩"
+        />
+    <item
+        android:id="@+id/menu_mode_double_color_black_white"
+        android:title="黑白"
+        />
+    <item
+        android:id="@+id/menu_mode_double_color_white_black"
+        android:title="白黑"
+        />
+    <item
+        android:id="@+id/menu_mode_double_color_yellow_blue"
+        android:title="黄蓝"
+        />
+    <item
+        android:id="@+id/menu_mode_double_color_blue_yellow"
+        android:title="蓝黄"
+        />
+    <item
+        android:id="@+id/menu_mode_gray"
+        android:title="灰度"
+        />
+    <item
+        android:id="@+id/menu_mode_reversegray"
+        android:title="反色"
+        />
+
+    <item
+        android:id="@+id/menu_mode_edge_black_white"
+        android:title="黑白"
+        />
+    <item
+        android:id="@+id/menu_mode_edge_white_black"
+        android:title="白黑"
+        />
+    <item
+        android:id="@+id/menu_mode_edge_blue_yellow"
+        android:title="蓝黄"
+        />
+    <item
+        android:id="@+id/menu_mode_edge_yellow_blue"
+        android:title="黄蓝"
+        />
+    <item
+        android:id="@+id/menu_mode_fakecolor"
+        android:title="伪彩色"
+        />
+
+
+</menu>

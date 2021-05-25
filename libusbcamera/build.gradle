@@ -1,0 +1,64 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.jiangdongguo'
+
+android {
+    compileSdkVersion rootProject.ext.versionCompiler
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.versionTarget
+        versionCode 2
+        versionName rootProject.ext.versionNameString
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        externalNativeBuild {
+            cmake {
+                cppFlags "-lGLESv2"
+                cppFlags "-frtti -fexceptions"
+                abiFilters 'arm64-v8a'//'armeabi-v7a',
+                arguments "-DOpenCV_DIR=" + rootDir + "/libusbcamera/src/main"
+                arguments "-DANDROID_STL=c++_shared"
+            }
+        }
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'arm64-v8a'//, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a' 'armeabi-v7a',
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.10.2"
+        }
+    }
+    packagingOptions {
+        pickFirst '**/*.so'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    // solving com.android.tools.r8.CompilationFailedException: Compilation failed to complete
+    compileOptions {
+        sourceCompatibility rootProject.ext.javaSourceCompatibility
+        targetCompatibility rootProject.ext.javaTargetCompatibility
+    }
+}
+
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation "androidx.appcompat:appcompat:${androidXVersion}"
+//    api "com.serenegiant:common:${commonLibVersion}"
+    implementation(name: 'common-release', ext: 'aar')
+    implementation 'com.google.code.gson:gson:2.8.2'
+}
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}

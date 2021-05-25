@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    listview的尺寸-->
+    <dimen name="list_width">396dp</dimen>
+    <dimen name="list_height">297dp</dimen>
+    <dimen name="first_list_width">257dp</dimen>
+    <dimen name="first_list_height">165dp</dimen>
+    <dimen name="second_list_width">396dp</dimen>
+    <dimen name="alpha_view_height">66dp</dimen>
+    <!--    提示框字号-->
+    <dimen name="remind_text_size">20sp</dimen>
+    <!--    提示框logo尺寸-->
+    <dimen name="bottom_logo_width">42dp</dimen>
+    <dimen name="bottom_logo_height">42dp</dimen>
+    <!--    set_param中提示的imageview的尺寸-->
+    <dimen name="bottom_image_width">75dp</dimen>
+    <dimen name="bottom_image_height">27dp</dimen>
+    <!--    黑色提示框尺寸-->
+    <dimen name="main_remind_layout_width">470dp</dimen>
+    <dimen name="main_remind_top_layout_width">430dp</dimen>
+    <dimen name="main_remind_layout_height">70dp</dimen>
+    <dimen name="main_top_layout_height">53dp</dimen>
+    <dimen name="remind_image_layout_height">93dp</dimen>
+    <!--    二级菜单textView的高度-->
+    <dimen name="second_list_text_height">22dp</dimen>
+    <dimen name="second_list_text_szie">20sp</dimen>
+    <dimen name="second_list_text_list_select_size">16sp</dimen>
+    <dimen name="second_list_text_list_normal_size">16sp</dimen>
+    <dimen name="second_list_list_width">204dp</dimen>
+    <dimen name="second_list_list_height">123dp</dimen>
+    <dimen name="second_list_list_item_height">33dp</dimen>
+    <dimen name="second_list_center_image_size">33dp</dimen>
+    <dimen name="second_list_other_image_size">30dp</dimen>
+    <!--    配置界面 字号设置的image的宽度高度 和字号-->
+    <dimen name="menu_set_remind_image_width">272dp</dimen>
+    <dimen name="menu_set_remind_image_height">27dp</dimen>
+    <dimen name="menu_set_font_size">12sp</dimen>
+    <dimen name="second_list_item_image_width">20dp</dimen>
+    <dimen name="second_list_item_image_height">20dp</dimen>
+    <dimen name="main_msg_top_image_size">30dp</dimen>
+    <dimen name="second_list_up_down_image_size">18dp</dimen>
+    <dimen name="first_item_height">55dp</dimen>
+
+
+</resources>
