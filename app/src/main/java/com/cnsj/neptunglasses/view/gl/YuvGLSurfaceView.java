@@ -26,7 +26,7 @@ public class YuvGLSurfaceView extends GLSurfaceView implements CameraInterface, 
     }
 
     private Context context;
-//    YuvRenderer renderer;
+    //    YuvRenderer renderer;
     RGBRenderer renderer;
 //    private int width = 1920, height = 1080;
 
@@ -371,7 +371,6 @@ public class YuvGLSurfaceView extends GLSurfaceView implements CameraInterface, 
 //    private int i;
 
 
-
     @Override
     public void onPreviewByteBuffer(ByteBuffer frame) {
         if (renderer != null)
@@ -456,5 +455,16 @@ public class YuvGLSurfaceView extends GLSurfaceView implements CameraInterface, 
 //        if (renderer!=null){
 //            renderer.noDataTest();
 //        }
+    }
+
+    public void blockDisplay() {
+        if (renderer != null)
+            renderer.blockDisplay();
+    }
+
+    public void display() {
+        if (renderer != null) {
+            renderer.display();
+        }
     }
 }

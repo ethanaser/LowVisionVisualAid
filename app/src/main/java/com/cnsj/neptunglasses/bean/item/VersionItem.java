@@ -80,7 +80,11 @@ public class VersionItem extends BaseItem {
 
     @Override
     public void onKeyDown(int keyCode) {
-
+        switch (keyCode) {
+            case -1:
+                activity.yuvGLSurfaceView.blockDisplay();
+                break;
+        }
     }
 
     @Override
@@ -112,7 +116,7 @@ public class VersionItem extends BaseItem {
 
     @Override
     public void finish() {
-
+        activity.yuvGLSurfaceView.display();
     }
 
     @Override

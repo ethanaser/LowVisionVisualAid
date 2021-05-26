@@ -116,7 +116,7 @@ public class OffsetUtils {
 //                result[k++] = yResult[i + 1][j];
 //            }
 //        }
-        float R0, pillowScale = 0.007f;
+        float R0, pillowScale = 0.01f;
 //        float R0, pillowScale = 0.0f;
         float[][] xResult = initX(null);
         float[][] yResult = initY(null);

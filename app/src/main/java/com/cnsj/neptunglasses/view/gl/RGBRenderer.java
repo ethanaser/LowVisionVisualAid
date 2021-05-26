@@ -101,22 +101,9 @@ public class RGBRenderer implements GLSurfaceView.Renderer {
         program = ShaderUtils.loadShader(YUVShaderCode.VERTEXCODE1, YUVShaderCode.FRAGMENTCODE_RGB);
 //        isReady = false;
         lastMills = System.currentTimeMillis();
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                OffsetUtils.init(context, xPoint, yPoint);
-//                //初始化顶点坐标 纹理坐标
-//                createFloatBuffers();
-//
-//                Log.d("TAG", "onDrawFrame: 初始化顶点和纹理坐标:" + (System.currentTimeMillis() - lastMills));
-//                isReady = true;
-//            }
-//        }).start();
         //初始化顶点坐标 纹理坐标
         createFloatBuffers();
-
         Log.d("TAG", "onDrawFrame: 初始化顶点和纹理坐标:" + (System.currentTimeMillis() - lastMills));
-//        isReady = true;
         //绑定GLSL的位置
         initLocation();
         width = DEFAULT_WIDTH;
@@ -314,7 +301,9 @@ public class RGBRenderer implements GLSurfaceView.Renderer {
         synchronized (this) {
 //            Log.d("TAG", "onDrawFrame: startDtaw");
             if (isNoData) {
-                GLES20.glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
+                GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+                GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
+                return;
             } else {
                 GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             }
@@ -614,15 +603,6 @@ public class RGBRenderer implements GLSurfaceView.Renderer {
             this.scale = 1.0f;
         }
         setDoubleEyeScale(doubleEyeScale);
-//        Matrix.setIdentityM(this.mvpMatrixLeft, 0);
-//        Matrix.setIdentityM(this.mvpMatrixRight, 0);
-//        if (scale >= 2) {
-//            Matrix.rotateM(this.mvpMatrixLeft, 0, 180.0f, 0.0f, 0.0f, 1.0f);
-//            Matrix.rotateM(this.mvpMatrixRight, 0, 180.0f, 0.0f, 0.0f, 1.0f);
-////            Matrix.translateM(this.mMvpMatrix, 0, 1.62f, 0.2f, 0.0f);
-//        }
-//        Matrix.scaleM(this.mvpMatrixLeft, 0, scale, scale, 1.0f);
-//        Matrix.scaleM(this.mvpMatrixRight, 0, scale, scale, 1.0f);
     }
 
     public float getScale() {
@@ -938,6 +918,8 @@ public class RGBRenderer implements GLSurfaceView.Renderer {
     public void setPhotoView(Bitmap bitmap) {
         isLoaded = false;
         isPhotoView = true;
+        //相册模式下直接阻断摄像头图像显示
+        blockDisplay(System.currentTimeMillis());
         width = bitmap.getWidth();
         height = bitmap.getHeight();
         createTextures();
@@ -954,12 +936,17 @@ public class RGBRenderer implements GLSurfaceView.Renderer {
 
     }
 
+    /**
+     * 退出相册模式
+     */
     public void quitPhotoView() {
         width = DEFAULT_WIDTH;
         height = DEFAUTL_HEIGHT;
         isLoaded = false;
         createTextures();
         isPhotoView = false;
+        //退出相册模式时延迟1s后在显示图像
+        blockDisplay(30);
         setScale(this.scale);
     }
 
@@ -972,96 +959,16 @@ public class RGBRenderer implements GLSurfaceView.Renderer {
 //    byte[] currentRGB;
     private float freezeScale = 1.0f;
 
-    /**
-     * 定格，拍照，获取Bitmap都由该方法获取
-     * //根据放大倍数切换接收数据的接口
-     * <p>
-     * //     * @param rgb
-     */
-//    public void onPreviewFrame(byte[] rgb) {
-//        isNoData = false;
-//        if (getScale() >= 2) return;
-//        if (isPhotoView) return;
-//        if (rgb != null) {
-////            currentMills = System.currentTimeMillis();
-////            System.arraycopy(yuv, 0, y, 0, ysize);
-////            System.arraycopy(yuv, ysize, u, 0, uvsize);
-////            System.arraycopy(yuv, ysize + uvsize, v, 0, uvsize);
-////            updateImage(y, u, v);
-//            if (freezeMode == 1) {
-//                if (freezeStart == 0) {
-//                    freezeStart = 1;
-////                    lastY = new byte[y.length];
-////                    lastU = new byte[u.length];
-////                    lastV = new byte[v.length];
-////                    System.arraycopy(y, 0, lastY, 0, y.length);
-////                    System.arraycopy(u, 0, lastU, 0, u.length);
-////                    System.arraycopy(v, 0, lastV, 0, v.length);
-//                    currentRGB = rgb;
-//                    freezeScale = getScale();
-//                }
-//                updateImage(currentRGB, null, null);
-//                if (this.onFrameListener != null) {
-//                    this.onFrameListener.onRGBFrame(currentRGB, freezeScale);
-//                }
-//            } else {
-//                currentRGB = rgb;
-//                updateImage(rgb, null, null);
-//                if (this.onFrameListener != null) {
-//                    this.onFrameListener.onRGBFrame(currentRGB, getScale());
-//                }
-//            }
-//
-////            Log.d("TAG", "saveBitmap: +++++" + (System.currentTimeMillis() - currentMills));
-//        } else {
-//            updateImage(null, null, null);
-//        }
-//    }
-
-    //根据放大倍数切换接收数据的接口
-//    public void onPreviewFrame1(byte[] rgb) {
-//        isNoData = false;
-//        if (getScale() < 2) return;
-//        if (isPhotoView) return;
-//        if (rgb != null) {
-////            currentMills = System.currentTimeMillis();
-////            System.arraycopy(yuv, 0, y, 0, ysize);
-////            System.arraycopy(yuv, ysize, u, 0, uvsize);
-////            System.arraycopy(yuv, ysize + uvsize, v, 0, uvsize);
-////            updateImage(y, u, v);
-//            if (freezeMode == 1) {
-//                if (freezeStart == 0) {
-//                    freezeStart = 1;
-////                    lastY = new byte[y.length];
-////                    lastU = new byte[u.length];
-////                    lastV = new byte[v.length];
-////                    System.arraycopy(y, 0, lastY, 0, y.length);
-////                    System.arraycopy(u, 0, lastU, 0, u.length);
-////                    System.arraycopy(v, 0, lastV, 0, v.length);
-//                    currentRGB = rgb;
-//                    freezeScale = getScale();
-//                }
-//                updateImage(currentRGB, null, null);
-//                if (this.onFrameListener != null) {
-//                    this.onFrameListener.onRGBFrame(currentRGB, freezeScale);
-//                }
-//            } else {
-//                currentRGB = rgb;
-//                updateImage(rgb, null, null);
-//                if (this.onFrameListener != null) {
-//                    this.onFrameListener.onRGBFrame(currentRGB, getScale());
-//                }
-//            }
-//
-////            Log.d("TAG", "saveBitmap: +++++" + (System.currentTimeMillis() - currentMills));
-//        } else {
-//            updateImage(null, null, null);
-//        }
-//    }
     public void onPreviewByteBuffer(ByteBuffer frame) {
         isNoData = false;
 //        if (getScale() >= 2) return;
         if (isPhotoView) return;
+        blockingTimes--;
+        if (blockingTimes > 0) {
+//            if (isNoData)
+//                updateImage(null);
+            return;
+        }
         if (frame != null) {
 //            currentMills = System.currentTimeMillis();
 //            System.arraycopy(yuv, 0, y, 0, ysize);
@@ -1084,14 +991,14 @@ public class RGBRenderer implements GLSurfaceView.Renderer {
                 }
                 updateImage(currentBuffer);
                 if (this.onFrameListener != null) {
-                    this.onFrameListener.onByteBufferFrame(currentBuffer,width,height,What.RGB565, freezeScale);
+                    this.onFrameListener.onByteBufferFrame(currentBuffer, width, height, What.RGB565, freezeScale);
                 }
             } else {
                 currentBuffer = frame;
 //                updateImage(rgb, null, null);
                 updateImage(frame);
                 if (this.onFrameListener != null) {
-                    this.onFrameListener.onByteBufferFrame(currentBuffer,width,height, What.RGB565, getScale());
+                    this.onFrameListener.onByteBufferFrame(currentBuffer, width, height, What.RGB565, getScale());
                 }
             }
 
@@ -1101,45 +1008,6 @@ public class RGBRenderer implements GLSurfaceView.Renderer {
         }
     }
 
-//    public void onPreviewByteBuffer1(ByteBuffer frame) {
-//        isNoData = false;
-//        if (getScale() < 2) return;
-//        if (isPhotoView) return;
-//        if (frame != null) {
-////            currentMills = System.currentTimeMillis();
-////            System.arraycopy(yuv, 0, y, 0, ysize);
-////            System.arraycopy(yuv, ysize, u, 0, uvsize);
-////            System.arraycopy(yuv, ysize + uvsize, v, 0, uvsize);
-////            updateImage(y, u, v);
-//            if (freezeMode == 1) {
-//                if (freezeStart == 0) {
-//                    freezeStart = 1;
-////                    lastY = new byte[y.length];
-////                    lastU = new byte[u.length];
-////                    lastV = new byte[v.length];
-////                    System.arraycopy(y, 0, lastY, 0, y.length);
-////                    System.arraycopy(u, 0, lastU, 0, u.length);
-////                    System.arraycopy(v, 0, lastV, 0, v.length);
-//                    currentBuffer = frame;
-//                    freezeScale = getScale();
-//                }
-//                updateImage(currentBuffer);
-//                if (this.onFrameListener != null) {
-//                    this.onFrameListener.onByteBufferFrame(currentBuffer, freezeScale);
-//                }
-//            } else {
-//                currentBuffer = frame;
-//                updateImage(frame);
-//                if (this.onFrameListener != null) {
-//                    this.onFrameListener.onByteBufferFrame(currentBuffer, getScale());
-//                }
-//            }
-//
-////            Log.d("TAG", "saveBitmap: +++++" + (System.currentTimeMillis() - currentMills));
-//        } else {
-//            updateImage(null);
-//        }
-//    }
 
     public SurfaceTexture getSurfaceTexture() {
         SurfaceTexture surfaceTexture = new SurfaceTexture(0);
@@ -1195,8 +1063,34 @@ public class RGBRenderer implements GLSurfaceView.Renderer {
 
     boolean isNoData;
 
-    public void noDataTest() {
+    /**
+     * 阻断图像显示
+     */
+    public void blockDisplay() {
         isNoData = true;
         this.glSurfaceView.requestRender();
+        blockDisplay(System.currentTimeMillis());
     }
+
+    /**
+     * 显示图像
+     */
+    public void display() {
+        isNoData = false;
+        blockDisplay(30);
+    }
+
+
+    public long blockingTimes = 0l;
+
+    /**
+     * 阻断图像显示 利用时间进行阻断，大概每秒30帧或60帧，阻断时间 几秒就乘以帧数
+     *
+     * @param times
+     */
+    public void blockDisplay(long times) {
+        this.blockingTimes = times;
+    }
+
+
 }
