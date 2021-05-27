@@ -74,3 +74,4 @@ USBCamera--------https://github.com/saki4510t/UVCCamera
 --22.Controller（用于对实时图像进行操作的控制类）
 -2.UVCCamera（第三方库libusbcamera封装的底层USB摄像头操作类）
 -3.native-lib.cpp（用于实现防抖功能的源文件---OpenCVView，内部使用光流追踪技术实现，网上有很多现成的案例）
+-4.关于节能功能的实现:目前方案为检测到未佩戴设备时，降低能耗（关闭摄像头，最直接的方式）。
