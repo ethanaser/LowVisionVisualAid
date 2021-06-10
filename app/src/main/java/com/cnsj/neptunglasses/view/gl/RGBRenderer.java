@@ -55,7 +55,7 @@ public class RGBRenderer implements GLSurfaceView.Renderer {
     /**
      * 相机分辨率
      */
-    private final static int DEFAULT_WIDTH = 1922, DEFAUTL_HEIGHT = 1082;
+    private final static int DEFAULT_WIDTH = 1928, DEFAUTL_HEIGHT = 1088;
     private int width = DEFAULT_WIDTH, height = DEFAUTL_HEIGHT;
     private final static int screenPiexlsWidth = 2400, screenPiexlsHeight = 1200;
     private float xPoint = 1.0f, yPoint = 0.5625f;
